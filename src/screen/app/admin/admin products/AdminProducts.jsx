@@ -371,48 +371,116 @@ function AdminProducts() {
 
       {addProductPopup &&(
     
-        <div className={style.overlay}> 
-          <form onSubmit={handleAddProductDone} className={style.popup}> 
-            <div className={style.close}> 
-              <button type="button" onClick={() =>{ setAddProductPopup(false), setAddProductForm({image:'',name:'',price:'',stockquantity:'',productcode:"",instockdate:'',discount:''})}} className={style.closeBtn} > <IoClose size={30} /> </button> 
-            </div> 
+        // <div className={style.overlay}> 
+        //   <form onSubmit={handleAddProductDone} className={style.popup}> 
+        //     <div className={style.close}> 
+        //       <button type="button" onClick={() =>{ setAddProductPopup(false), setAddProductForm({image:'',name:'',price:'',stockquantity:'',productcode:"",instockdate:'',discount:''})}} className={style.closeBtn} > <IoClose size={30} /> </button> 
+        //     </div> 
 
-            <label className={style.label}>Image</label> 
-            <input type="file" onChange={handleChangeImage} name="image" accept="image/*" className={style.input} required /> 
+        //     <label className={style.label}>Image</label> 
+        //     <input type="file" onChange={handleChangeImage} name="image" accept="image/*" className={style.input} required /> 
 
-            <label className={style.label}> Product Category </label>
-            <select className={style.input} name="category" value={addProductForm.productcategory}  onChange={(e) => setAddProductForm({ ...addProductForm, productcategory: e.target.value, })} >
+        //     <label className={style.label}> Product Category </label>
+        //     <select className={style.input} name="category" value={addProductForm.productcategory}  onChange={(e) => setAddProductForm({ ...addProductForm, productcategory: e.target.value, })} >
+        //       <option value="">Select</option>
+        //       <option value="beautyproducts">Beauty Products</option>
+        //       <option value="undergarments">Under Garments</option>
+        //     </select>
+
+
+        //     <label className={style.label}>Product Code</label> 
+        //     <input type="text" onChange={handleChange} value={addProductForm.productcode} placeholder="Enter Your Product Code" name="productcode" className={style.input} required /> 
+
+        //     <label className={style.label}>Name</label> 
+        //     <input type="text" onChange={handleChange} value={addProductForm.name} placeholder="Enter Your Product Name" name="name" className={style.input} required /> 
+
+        //     <label className={style.label}>Original Price</label> 
+        //     <input type="number" onChange={handleChange} value={addProductForm.originalprice} placeholder="Enter Your Product Price" name="originalprice" className={style.input} required /> 
+            
+        //     <label className={style.label}>Discount</label> 
+        //     <input type="number" onChange={handleChange} value={addProductForm.discount} placeholder="Enter Discount in percentage" name="discount" className={style.input} required /> 
+
+        //     <label className={style.label}>Stock Quantity</label> 
+        //     <input type="text" onChange={handleChange} value={addProductForm.stockquantity} placeholder="Enter Your Stock Quantity" name="stockquantity" className={style.input} required /> 
+
+        //     <label className={style.label}>In Stock Date</label> 
+        //     <input type="date" onChange={handleChange} value={addProductForm.instockdate} name="instockdate" className={style.input} placeholder='ddd' required /> 
+
+        //     <button type="submit" className={style.submitBtn}> Done </button> 
+        //   </form> 
+        // </div>
+
+
+
+        <div className={style.updateProductOverlay}>
+        <form onSubmit={handleAddProductDone} className={style.updateProductModal} >
+          <div className={style.updateProductHeader}>
+            <div className={style.updateProductTitleSection}>
+              <h4 className={style.updateProductTitle}> Add Product </h4>
+              <small className={style.updateProductSubtitle}> Add new product </small>
+            </div>
+            <button type="button" onClick={() =>{ setAddProductPopup(false), setAddProductForm({image:'',name:'',price:'',stockquantity:'',productcode:"",instockdate:'',discount:''})}} className={style.updateProductCloseButton} > ×  </button> 
+          </div>
+      
+          <div className={style.updateProductField}>
+            <label className={style.updateProductLabel}> Product Image </label>
+            <input type="file" onChange={handleChangeImage} name="image" accept="image/*" className={style.updateProductFileInput} required /> 
+          </div>
+
+          <div className={style.updateProductField}>
+            <label className={style.updateProductLabel}> Product Category </label>
+            <select className={style.updateProductFileInput} name="category" value={addProductForm.productcategory}  onChange={(e) => setAddProductForm({ ...addProductForm, productcategory: e.target.value, })} >
               <option value="">Select</option>
               <option value="beautyproducts">Beauty Products</option>
               <option value="undergarments">Under Garments</option>
             </select>
+          </div>
 
+          <div className={style.updateProductField}>
+            <label className={style.updateProductLabel}> Product Code </label>
+            <input type="text" onChange={handleChange} value={addProductForm.productcode} placeholder="Enter Your Product Code" name="productcode" className={style.updateProductInput} required /> 
+          </div>
 
-            <label className={style.label}>Product Code</label> 
-            <input type="text" onChange={handleChange} value={addProductForm.productcode} placeholder="Enter Your Product Code" name="productcode" className={style.input} required /> 
+          <div className={style.updateProductField}>
+            <label className={style.updateProductLabel}> Product Name </label>
+            <input type="text" onChange={handleChange} value={addProductForm.name} placeholder="Enter Your Product Name" name="name" className={style.updateProductInput} required /> 
+          </div>
+      
+          <div className={style.updateProductField}>
+            <label className={style.updateProductLabel}> Original Price </label>
+            <input type="number" onChange={handleChange} value={addProductForm.originalprice} placeholder="Enter Your Product Price" name="originalprice" className={style.updateProductInput} required /> 
 
-            <label className={style.label}>Name</label> 
-            <input type="text" onChange={handleChange} value={addProductForm.name} placeholder="Enter Your Product Name" name="name" className={style.input} required /> 
+          </div>
 
-            <label className={style.label}>Original Price</label> 
-            <input type="number" onChange={handleChange} value={addProductForm.originalprice} placeholder="Enter Your Product Price" name="originalprice" className={style.input} required /> 
+          <div className={style.updateProductField}>
+            <label className={style.updateProductLabel}> Discount </label>
+            <input type="number" onChange={handleChange} value={addProductForm.discount} placeholder="Enter Discount in percentage" name="discount" className={style.updateProductInput} required /> 
+
+          </div>
+      
+          <div className={style.updateProductField}>
+            <label className={style.updateProductLabel}> Stock Quantity </label>
+            <input type="text" onChange={handleChange} value={addProductForm.stockquantity} placeholder="Enter Your Stock Quantity" name="stockquantity" className={style.updateProductInput} required /> 
             
-            <label className={style.label}>Discount</label> 
-            <input type="number" onChange={handleChange} value={addProductForm.discount} placeholder="Enter Discount in percentage" name="discount" className={style.input} required /> 
-
-            <label className={style.label}>Stock Quantity</label> 
-            <input type="text" onChange={handleChange} value={addProductForm.stockquantity} placeholder="Enter Your Stock Quantity" name="stockquantity" className={style.input} required /> 
-
-            <label className={style.label}>In Stock Date</label> 
-            <input type="date" onChange={handleChange} value={addProductForm.instockdate} name="instockdate" className={style.input} placeholder='ddd' required /> 
-
-            <button type="submit" className={style.submitBtn}> Done </button> 
-          </form> 
+          </div>
+      
+          <div className={style.updateProductField}>
+            <label className={style.updateProductLabel}> In Stock Date </label>
+            <input type="date" onChange={handleChange} value={addProductForm.instockdate} name="instockdate" className={style.updateProductInput} placeholder='ddd' required /> 
+          </div>
+      
+          {/* Buttons */}
+          <div className={style.updateProductButtons}>
+            <button type="button" onClick={() => setAddProductPopup(false)} className={style.updateProductCancelButton} > Cancel </button>
+            <button type="submit" className={style.updateProductSaveButton} > Save Changes </button>
+          </div>
+        </form>
         </div>
+
       )}
 
       {updateProductPopup && (
-         <div className={style.updateProductOverlay}>
+        <div className={style.updateProductOverlay}>
       
         <form onSubmit={handleUpdateProductDone} className={style.updateProductModal} >
       
@@ -436,7 +504,12 @@ function AdminProducts() {
               <option value="undergarments">Under Garments</option>
             </select>
           </div>
-
+      
+          <div className={style.updateProductField}>
+            <label className={style.updateProductLabel}> Product Code </label>
+            <input type="text" className={style.updateProductInput} value={editProductData.productcode} onChange={(e) => setEditProductData({ ...editProductData, productcode: e.target.value, }) } />
+          </div>
+          
           <div className={style.updateProductField}>
             <label className={style.updateProductLabel}> Product Name </label>
             <input type="text" className={style.updateProductInput} value={editProductData.name} onChange={(e) => setEditProductData({ ...editProductData, name: e.target.value, }) } />
@@ -455,11 +528,6 @@ function AdminProducts() {
           <div className={style.updateProductField}>
             <label className={style.updateProductLabel}> Stock Quantity </label>
             <input type="text" className={style.updateProductInput} value={editProductData.stockquantity} onChange={(e) => setEditProductData({ ...editProductData, stockquantity: e.target.value, }) } />
-          </div>
-      
-          <div className={style.updateProductField}>
-            <label className={style.updateProductLabel}> Product Code </label>
-            <input type="text" className={style.updateProductInput} value={editProductData.productcode} onChange={(e) => setEditProductData({ ...editProductData, productcode: e.target.value, }) } />
           </div>
       
           <div className={style.updateProductField}>
@@ -489,7 +557,7 @@ function AdminProducts() {
           </div>
       
         </form>
-      </div>
+        </div>
       )}
       
       {deleteProductPopup && (

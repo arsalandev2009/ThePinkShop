@@ -567,6 +567,9 @@ gap: 5px;
 .popup {
   width:500px;
   max-width: 100%;
+  height: 90dvh;
+  overflow-x: scroll;
+  scrollbar-width: none;
   padding: 24px !important;
   background: #fff;
   border-radius: 16px;
