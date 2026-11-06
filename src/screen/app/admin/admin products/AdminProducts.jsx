@@ -26,9 +26,6 @@ function AdminProducts() {
   const [filteredResult,setFilteredResult]=useState([])
   const [category,setCategory]=useState("all")
 
-// console.log(category)
-
-  // setTimeout(()=>{setMenu(null)},10000)
 
   useEffect(()=>{
     const getProducts =async()=>{
@@ -162,7 +159,10 @@ function AdminProducts() {
 
   const handleAddProductDone=async(e)=>{
     e.preventDefault()
-
+    if(addProductForm.productcategory === ''){
+      alert('Please Select Category')
+      return
+    }
     if(getProductsFromSupabase.some(item => item.productcode == addProductForm.productcode)){
       alert('Product With this Code already Exist')
       return;
@@ -175,10 +175,10 @@ function AdminProducts() {
     const finalPrice = addProductForm.originalprice-percentage 
     if(addProductForm.discount <= 0){
 
-      const {data,error}=await supabase.from('productCosmetics').insert({image:addProductForm.image,name:addProductForm.name,originalprice:addProductForm.originalprice,discount:addProductForm.discount,discountprice:addProductForm.originalprice,stockquantity:addProductForm.stockquantity,productcode:addProductForm.productcode , instockdate:addProductForm.instockdate,productcategory:editProductData.productcategory})
+      const {data,error}=await supabase.from('productCosmetics').insert({image:addProductForm.image,productcategory:addProductForm.productcategory,name:addProductForm.name,originalprice:addProductForm.originalprice,discount:addProductForm.discount,discountprice:addProductForm.originalprice,stockquantity:addProductForm.stockquantity,productcode:addProductForm.productcode , instockdate:addProductForm.instockdate})
       if(!error){       
         setAddProductPopup(false)
-        setAddProductForm({image:'',name:'',price:'',stockquantity:"",productcode:'',instockdate:'',discount:''})
+        setAddProductForm({image:'',productcategory:"",name:'',price:'',stockquantity:"",productcode:'',instockdate:'',discount:''})
         setRefresh(prev => !prev);
         return;
       }
@@ -186,11 +186,12 @@ function AdminProducts() {
       console.log(error)
       return
     }
-    const {data,error}=await supabase.from('productCosmetics').insert({image:addProductForm.image,name:addProductForm.name,originalprice:addProductForm.originalprice,discount:addProductForm.discount,discountprice:finalPrice,stockquantity:addProductForm.stockquantity,productcode:addProductForm.productcode , instockdate:addProductForm.instockdate,productcategory:editProductData.productcategory})
+    const {data,error}=await supabase.from('productCosmetics').insert({image:addProductForm.image,productcategory:addProductForm.productcategory,name:addProductForm.name,originalprice:addProductForm.originalprice,discount:addProductForm.discount,discountprice:finalPrice,stockquantity:addProductForm.stockquantity,productcode:addProductForm.productcode , instockdate:addProductForm.instockdate})
     if(!error){       
       setAddProductPopup(false)
-      setAddProductForm({image:'',name:'',price:'',stockquantity:"",productcode:'',instockdate:'',discount:'',originalprice:'',discountprice:''})
+      setAddProductForm({image:'',name:'',price:'',productcategory:'',stockquantity:"",productcode:'',instockdate:'',discount:'',originalprice:'',discountprice:''})
       setRefresh(prev => !prev);
+      console.log(addProductForm)
       return;
     }
     alert('Error! Contact the developer')
@@ -298,7 +299,7 @@ function AdminProducts() {
                       <div className={style.mid}>
                         {/* <div className={style.productcode}>  </div> */}
                         <div className={style.productname}>{item.name}</div>
-                        <p> {item.discount != 0 ? <p className={style.discountpercentage}>{item.discount}% Off</p> : ''}</p>
+                        <div> {item.discount != 0 ? <p className={style.discountpercentage}>{item.discount}% Off</p> : ''}</div>
                         <div className={style.productstock}> <p>Code: {item.productcode} </p>  <p>Rs: {item.discountprice} /-</p> </div>
                         {/* <div className={style.productprice}>  </div> */}
                         <div className={style.productinstockdate}> <p style={{backgroundColor:`${item.stockquantity >0 ? '#DCFCE7' : '#FEF3C6'}`,color:`${item.stockquantity>0?'#008236 ':'#BB4D00'}`}}> {!isNaN(item.stockquantity)&&item.stockquantity.trim()!== ""? item.stockquantity > 0 ? `${item.stockquantity} in Stock`:'Out of Stock':item.stockquantity} </p>   <p>{new Date(item.instockdate).toLocaleDateString("en-US",{timeZone:"Asia/Karachi",month:"short", day:"2-digit",year:"numeric"})}</p> </div>
@@ -380,14 +381,15 @@ function AdminProducts() {
             <input type="file" onChange={handleChangeImage} name="image" accept="image/*" className={style.input} required /> 
 
             <label className={style.label}> Product Category </label>
-            <select className={style.input} name="category" value={editProductData.productcategory}  onChange={(e) => setEditProductData({ ...editProductData, productcategory: e.target.value, })} >
+            <select className={style.input} name="category" value={addProductForm.productcategory}  onChange={(e) => setAddProductForm({ ...addProductForm, productcategory: e.target.value, })} >
+              <option value="">Select</option>
               <option value="beautyproducts">Beauty Products</option>
               <option value="undergarments">Under Garments</option>
             </select>
 
 
             <label className={style.label}>Product Code</label> 
-            <input type="number" onChange={handleChange} value={addProductForm.productcode} placeholder="Enter Your Product Code" name="productcode" className={style.input} required /> 
+            <input type="text" onChange={handleChange} value={addProductForm.productcode} placeholder="Enter Your Product Code" name="productcode" className={style.input} required /> 
 
             <label className={style.label}>Name</label> 
             <input type="text" onChange={handleChange} value={addProductForm.name} placeholder="Enter Your Product Name" name="name" className={style.input} required /> 
@@ -457,7 +459,7 @@ function AdminProducts() {
       
           <div className={style.updateProductField}>
             <label className={style.updateProductLabel}> Product Code </label>
-            <input type="number" className={style.updateProductInput} value={editProductData.productcode} onChange={(e) => setEditProductData({ ...editProductData, productcode: e.target.value, }) } />
+            <input type="text" className={style.updateProductInput} value={editProductData.productcode} onChange={(e) => setEditProductData({ ...editProductData, productcode: e.target.value, }) } />
           </div>
       
           <div className={style.updateProductField}>

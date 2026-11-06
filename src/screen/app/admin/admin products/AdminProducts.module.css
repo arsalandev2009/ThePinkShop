@@ -39,8 +39,8 @@
 .container{
     width: 100%;
     height: 90dvh;
-    overflow-y: scroll;
-    scrollbar-width: none;
+    /* overflow-y: scroll; */
+    /* scrollbar-width: none; */
    /* overflow-y: scroll; */
   /* background: green; */
     padding-top: 100px !important;
