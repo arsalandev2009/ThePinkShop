@@ -31,7 +31,21 @@ function AdminProducts() {
     const getProducts =async()=>{
       const {data,error}=await supabase.from('productCosmetics').select().order("productcode", { ascending: true });
       if(!error){
-        setGetProductsFromSupabase(data)
+        const sortedProducts = data.sort((a, b) => {
+  const aNum = !isNaN(a.productcode) && a.productcode !== "";
+  const bNum = !isNaN(b.productcode) && b.productcode !== "";
+
+  if (aNum && bNum) {
+    return Number(a.productcode) - Number(b.productcode);
+  }
+
+  if (aNum) return -1;
+  if (bNum) return 1;
+
+  return a.productcode.localeCompare(b.productcode);
+});
+
+setGetProductsFromSupabase(sortedProducts);
       }
     }
     getProducts()
