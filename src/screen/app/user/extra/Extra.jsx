@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../../../utils/supabase'
 import { Header, SearchBar } from '../../../../components/component'
@@ -40,13 +40,15 @@ function Extra() {
     <div className={style.container}>
       <div className={style.header}><Header HeaderButtonText='Login' HeaderButtonOnClick={()=>{navigate('/login')}} /></div>
       <div className={style.searchbar}><SearchBar SearchValue={searchInput} SearchOnChange={handleSearch}/></div>
-      
-      <div className={style.maincontent}>
+
+
+
+      <div className={style.maincontent} >
         {searchInput == ''?(
             getProducts.map((item)=>(
               <div key={item.id} className={style.productcontainer}>
                <div className={style.productupper}>
-                <img src={item.image} alt={item.name} className={style.image}/>
+                <img src={item.image} alt={item.name} className={style.image} />
                 <p> {item.discount != 0 ? <p className={style.productstock} style={{backgroundColor:item.stockquantity>0?'#ff1493':'#9f1239'}}>{item.discount}% Off</p> : '' } </p>
                </div>
                <div className={style.productlower}>
@@ -72,6 +74,8 @@ function Extra() {
 
         
       </div>
+ 
+
     </div>
     
   )
